@@ -35,18 +35,23 @@ function finished() {
   console.log("Finished");
 }
 
+let timeoutId;
+
 function timeout() {
   return new Promise((_, reject) => {
-    setTimeout(() => {
-      console.log("Timeout");
+    console.log("calling setTimeout task");
+    timeoutId = setTimeout(() => {
+      console.log("Timeout: 10 seconds passed. executed the callback");
       reject(new Error("Timeout occurred"));
     }, 10000);
+    console.log("setTimeout called. Running it in background.");
   });
 }
 
 async function mainTask() {
   await hitGoogle();
   await parallelEndPointHit();
+  clearTimeout(timeoutId);
 }
 
 async function main() {
